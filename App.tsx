@@ -1,11 +1,14 @@
 import { useCallback, useMemo } from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
+import SafeAreaView from "react-native-safe-area-view";
+import { SafeAreaProvider } from "react-native-safe-area-view";
 
 import TaskContext, { Task } from "./app/models/Task";
-import IntroText from "./app/components/IntroText";
-import AddTaskForm from "./app/components/AddTaskForm";
-import TaskList from "./app/components/TaskList";
+// import IntroText from "./app/components/IntroText";
+// import AddTaskForm from "./app/components/AddTaskForm";
+// import TaskList from "./app/components/TaskList";
 import colors from "./app/styles/colors";
+import RootNavigator from "./app/navigation/RootNavigator";
 
 const { useRealm, useQuery, RealmProvider } = TaskContext;
 
@@ -32,7 +35,7 @@ function App() {
         realm.create("Task", Task.generate(description));
       });
     },
-    [realm],
+    [realm]
   );
 
   const handleToggleTaskStatus = useCallback(
@@ -56,7 +59,7 @@ function App() {
       //   task.isComplete = !task.isComplete;
       // });
     },
-    [realm],
+    [realm]
   );
 
   const handleDeleteTask = useCallback(
@@ -68,20 +71,17 @@ function App() {
         // realm?.delete(realm?.objectForPrimaryKey('Task', id));
       });
     },
-    [realm],
+    [realm]
   );
 
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.content}>
-        <AddTaskForm onSubmit={handleAddTask} />
-        {tasks.length === 0 ? (
-          <IntroText />
-        ) : (
-          <TaskList tasks={tasks} onToggleTaskStatus={handleToggleTaskStatus} onDeleteTask={handleDeleteTask} />
-        )}
-      </View>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.screen}>
+        <RootNavigator />
+        {/*<AddTaskForm onSubmit={handleAddTask} />*/}
+        {/*<IntroText />*/}
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
@@ -89,11 +89,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: colors.darkBlue,
-  },
-  content: {
-    flex: 1,
-    paddingTop: 20,
-    paddingHorizontal: 20,
   },
 });
 
@@ -103,6 +98,8 @@ function AppWrapper() {
   }
   return (
     <RealmProvider>
+      <StatusBar />
+
       <App />
     </RealmProvider>
   );
