@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "take-root",
+    "slug": "take-root",
+    "version": "1.0.0",
+    "sdkVersion": "47.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "android": {
+      "package": "com.alazardev.takeroot"
+    },
+    "splash": {
+      "image": "./app/assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff",
+    }
+  }
+}
