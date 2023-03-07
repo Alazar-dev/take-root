@@ -8,10 +8,14 @@ import { ErrorMessage } from "../../components";
 import { InputField } from "../../components/Inputs";
 import styles from "./style";
 import { CustomTextField } from "../../components/TextFields";
+import { Realm } from "@realm/react";
+
+const config = { id: "take-root-meurx" };
 
 export default function SignupScreen({ navigation }) {
+  const app = new Realm.App(config);
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail]: string = useState<string>("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -40,6 +44,26 @@ export default function SignupScreen({ navigation }) {
       setConfirmPasswordVisibility(!confirmPasswordVisibility);
     }
   };
+
+  type Credentials = {
+    email: string;
+    password: string;
+  };
+  async function signup() {
+    const credentials = Realm.Credentials.emailPassword(email, password);
+    try {
+      const result = await app.emailPasswordAuth.registerUser({
+        email,
+        password,
+      });
+      console.log("Successfully logged in!", result);
+      return result;
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Failed to log in", err.message);
+      }
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -207,6 +231,7 @@ export default function SignupScreen({ navigation }) {
           <ErrorMessage error={signupError} visible={true} />
         ) : null}
         <Button
+          onPress={signup}
           backgroundColor="#f57c00"
           title="Create"
           titleColor="#fff"

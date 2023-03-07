@@ -9,6 +9,7 @@ import TaskContext, { Task } from "./app/models/Task";
 // import TaskList from "./app/components/TaskList";
 import colors from "./app/styles/colors";
 import RootNavigator from "./app/navigation/RootNavigator";
+import { AuthenticatedUserProvider } from "./app/navigation/AuthenticatedUserProvider";
 
 const { useRealm, useQuery, RealmProvider } = TaskContext;
 
@@ -76,11 +77,11 @@ function App() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.screen}>
+      <AuthenticatedUserProvider>
         <RootNavigator />
-        {/*<AddTaskForm onSubmit={handleAddTask} />*/}
-        {/*<IntroText />*/}
-      </SafeAreaView>
+      </AuthenticatedUserProvider>
+      {/*<AddTaskForm onSubmit={handleAddTask} />*/}
+      {/*<IntroText />*/}
     </SafeAreaProvider>
   );
 }

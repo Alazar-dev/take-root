@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import { Image, View, TouchableOpacity, Text } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Realm } from "@realm/react";
 import { Button } from "../../components";
 import { ErrorMessage } from "../../components";
 import { InputField } from "../../components/Inputs";
 import styles from "./style";
 import { CustomTextField } from "../../components/TextFields";
+import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProvider";
+const config = { id: "take-root-meurx" };
 
 export default function Login({ navigation }) {
+  const { user, setUser } = useContext(AuthenticatedUserContext);
+  const app = new Realm.App(config);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -25,6 +30,20 @@ export default function Login({ navigation }) {
       setPasswordVisibility(!passwordVisibility);
     }
   };
+
+  async function login() {
+    const credentials = Realm.Credentials.emailPassword(email, password);
+    try {
+      const user = await app.logIn(credentials);
+      console.log("Successfully logged in!", user);
+      setUser(user);
+      return user;
+    } catch (err) {
+      if (err instanceof Error) {
+        console.error("Failed to log in", err.message);
+      }
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -126,7 +145,7 @@ export default function Login({ navigation }) {
         </View>
         {loginError ? <ErrorMessage error={loginError} visible={true} /> : null}
         <Button
-          onPress={() => navigation.navigate("Dashboard")}
+          onPress={login}
           backgroundColor="#f57c00"
           title="Login"
           titleColor="#fff"
