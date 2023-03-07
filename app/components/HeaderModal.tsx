@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, View, TouchableOpacity, FlatList } from "react-native";
 import { CustomTextField } from "./TextFields";
 import {
@@ -8,9 +8,13 @@ import {
   EvilIcons,
 } from "@expo/vector-icons";
 import { Avatar } from "react-native-paper";
+import { AuthenticatedUserContext } from "../navigation/AuthenticatedUserProvider";
 
 export default function Header({ hideModal, navigation }) {
-  const handleSignOut = async () => {};
+  const { user, setUser } = useContext(AuthenticatedUserContext);
+  const handleSignOut = async () => {
+    setUser(null);
+  };
   const headers = [
     {
       label: "My Profile",
