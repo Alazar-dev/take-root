@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   View,
@@ -59,7 +59,7 @@ export default function PeopleDetails({ route, navigation }) {
             }}
           >
             <Feather name="plus-circle" size={37} color="#21C17C" />
-            <CustomTextField label="New Action" marginTop={5} />
+            <CustomTextField label="New ActionScreen" marginTop={5} />
           </TouchableOpacity>
           <View style={{ justifyContent: "flex-start", marginRight: 110 }}>
             <Image

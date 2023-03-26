@@ -10,11 +10,10 @@ import { InputField } from "../../components/Inputs";
 import styles from "./style";
 import { CustomTextField } from "../../components/TextFields";
 import { AuthenticatedUserContext } from "../../navigation/AuthenticatedUserProvider";
-const config = { id: "take-root-meurx" };
 
 export default function Login({ navigation }) {
-  const { user, setUser } = useContext(AuthenticatedUserContext);
-  const app = new Realm.App(config);
+  const { user, setUser, app } = useContext(AuthenticatedUserContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(true);

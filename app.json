@@ -3,7 +3,6 @@
     "name": "take-root",
     "slug": "take-root",
     "version": "1.0.0",
-    "sdkVersion": "47.0.0",
     "platforms": [
       "ios",
       "android"
@@ -14,7 +13,16 @@
     "splash": {
       "image": "./app/assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff",
+      "backgroundColor": "#ffffff"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2a641574-b7b1-4042-8bdc-2ed521d6ae62"
+      }
+    },
+    "owner": "alazar_rooted",
+    "ios": {
+      "bundleIdentifier": "com.alazardev.takeroot"
     }
   }
 }
